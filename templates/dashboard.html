@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+  <!-- Notes panel -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>My Notes</span>
+        <small class="text-muted">Try /note/1, /note/2, /note/3 …</small>
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for note in notes %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{{ url_for('view_note', note_id=note['id']) }}">{{ note['title'] }}</a>
+          <span class="badge bg-secondary">id={{ note['id'] }}</span>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">No notes yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Profile links -->
+    <div class="card mb-4">
+      <div class="card-header">User Profiles <small class="text-muted">(IDOR – try /profile/1 …)</small></div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="{{ url_for('profile', user_id=1) }}">/profile/1 – admin</a></li>
+        <li class="list-group-item"><a href="{{ url_for('profile', user_id=2) }}">/profile/2 – alice</a></li>
+        <li class="list-group-item"><a href="{{ url_for('profile', user_id=3) }}">/profile/3 – bob</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Comments panel (Stored XSS) -->
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-header">Comments <small class="text-muted">(Stored XSS)</small></div>
+      <ul class="list-group list-group-flush">
+        {% for c in comments %}
+        <li class="list-group-item">
+          <strong>{{ c['author'] }}:</strong>
+          <!-- VULN: rendered without escaping -->
+          {{ c['body'] | safe }}
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">No comments yet.</li>
+        {% endfor %}
+      </ul>
+      <div class="card-body">
+        <form method="POST" action="{{ url_for('post_comment') }}">
+          <div class="mb-2">
+            <input type="text" name="author" class="form-control form-control-sm" placeholder="Your name" value="{{ username }}">
+          </div>
+          <div class="mb-2">
+            <textarea name="body" class="form-control form-control-sm" rows="2"
+              placeholder="Try: &lt;script&gt;alert(1)&lt;/script&gt;"></textarea>
+          </div>
+          <button class="btn btn-sm btn-outline-primary">Post Comment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

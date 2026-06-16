@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Ping Utility{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header">Network Ping <small class="text-muted">(Command Injection — try: <code>127.0.0.1; id</code>)</small></div>
+  <div class="card-body">
+    <form method="GET" action="{{ url_for('ping') }}">
+      <div class="input-group mb-3">
+        <input type="text" name="host" class="form-control" placeholder="127.0.0.1" value="{{ host }}">
+        <button class="btn btn-primary">Ping</button>
+      </div>
+    </form>
+    {% if result %}
+    <pre class="bg-dark text-success p-3 rounded">{{ result }}</pre>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

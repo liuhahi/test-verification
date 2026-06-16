@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Profile – {{ user['username'] }}{% endblock %}
+{% block content %}
+<div class="card col-md-5">
+  <div class="card-header">User Profile — ID {{ user['id'] }}</div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><strong>Username:</strong> {{ user['username'] }}</li>
+    <li class="list-group-item"><strong>Email:</strong> {{ user['email'] }}</li>
+    <li class="list-group-item"><strong>Role:</strong>
+      <span class="badge bg-{{ 'danger' if user['role'] == 'admin' else 'secondary' }}">{{ user['role'] }}</span>
+    </li>
+  </ul>
+</div>
+<a href="{{ url_for('dashboard') }}" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-4">
+    <div class="card shadow">
+      <div class="card-body p-4">
+        <h3 class="card-title text-center mb-4">VulnApp Login</h3>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form method="POST" action="{{ url_for('login') }}">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="admin" autocomplete="off">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Sign In</button>
+        </form>
+        <hr>
+        <p class="text-muted small text-center mb-0">
+          Test accounts: <code>admin/admin123</code> · <code>alice/password</code> · <code>bob/bob123</code>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

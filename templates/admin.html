@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin Panel{% endblock %}
+{% block content %}
+<div class="alert alert-warning">Admin Panel — all user records (including password hashes)</div>
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Password Hash (MD5)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u['id'] }}</td>
+      <td>{{ u['username'] }}</td>
+      <td>{{ u['email'] }}</td>
+      <td>{{ u['role'] }}</td>
+      <td><code class="text-danger">{{ u['password'] }}</code></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

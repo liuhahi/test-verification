@@ -1,0 +1,49 @@
+# Claude
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv*/
+venv/
+env/
+ENV/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Vercel
+.vercel/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs & temp
+*.log
+/tmp/
+.vercel

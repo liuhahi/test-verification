@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" action="{{ url_for('search') }}">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search notes…" value="{{ query }}">
+        <button class="btn btn-primary">Search</button>
+      </div>
+    </form>
+    <!-- VULN: Reflected XSS — query printed via |safe -->
+    <p class="mt-2 text-muted small">Results for: <em>{{ query | safe }}</em></p>
+  </div>
+</div>
+
+{% if results %}
+<div class="list-group">
+  {% for note in results %}
+  <a href="{{ url_for('view_note', note_id=note['id']) }}" class="list-group-item list-group-item-action">
+    <strong>{{ note['title'] }}</strong>
+    <span class="text-muted ms-2 small">{{ note['content'][:80] }}</span>
+  </a>
+  {% endfor %}
+</div>
+{% elif query %}
+<p class="text-muted">No results found.</p>
+{% endif %}
+{% endblock %}
